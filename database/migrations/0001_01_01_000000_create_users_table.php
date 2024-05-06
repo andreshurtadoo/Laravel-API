@@ -13,8 +13,16 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->string('cedula')->nullable();
             $table->string('name');
+            $table->string('lastname');
             $table->string('email')->unique();
+            $table->string('telephone')->nullable();
+            $table->string('state')->nullable();
+            $table->string('city')->nullable();
+            $table->string('photo_url')->nullable();
+            $table->tinyInteger('status')->default(0);
+            $table->tinyInteger('rol')->default(0);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
