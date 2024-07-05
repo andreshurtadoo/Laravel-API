@@ -13,7 +13,15 @@ class UserController extends Controller
 {
     public function index(): JsonResponse
     {
-        return response()->json(User::all()->where('status', '=', 0), 200);
+        $users = User::where('status', 0)->get()->map(function ($user) {
+            // Verificar si existe la URL de la foto y construir la URL completa
+            if ($user->photo_url) {
+                $user->photo_url = asset($user->photo_url);
+            }
+            return $user;
+        });
+
+        return response()->json($users, 200);
     }
 
     public function store(Request $request): JsonResponse
@@ -67,6 +75,16 @@ class UserController extends Controller
     public function show($id): JsonResponse
     {
         $user = User::find($id);
+
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
+
+        // Añadir la URL completa para la foto si existe
+        if ($user->photo_url) {
+            $user->photo_url = asset($user->photo_url);
+        }
+
         return response()->json($user, 200);
     }
 

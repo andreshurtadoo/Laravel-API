@@ -12,14 +12,19 @@ class VideoController extends Controller
     // Obtener todos los videos
     public function index()
     {
-        // Obtiene todos los videos incluyendo la información del usuario asociado
-        $videos = Video::with('user')->get();
+        // Obtiene todos los videos incluyendo la información del usuario, likes, dislikes y comentarios asociados
+        $videos = Video::with(['user', 'likes', 'dislikes', 'comments'])->get();
 
-        // Agrega la URL completa del video al objeto de video
+        // Agrega la URL completa del video y la cantidad de likes y dislikes al objeto de video
         $videos->transform(function ($video) {
             if ($video->folderName) {
                 $video->folderName = asset($video->folderName);
             }
+
+            // Agregar el conteo de likes y dislikes
+            $video->likes_count = $video->likes->count();
+            $video->dislikes_count = $video->dislikes->count();
+
             return $video;
         });
 
@@ -67,7 +72,7 @@ class VideoController extends Controller
     // Obtener un video específico por ID
     public function show($id)
     {
-        $video = Video::with('user')->find($id);
+        $video = Video::with(['user', 'likes', 'dislikes', 'comments'])->find($id);
 
         if (!$video) {
             return response()->json(['message' => 'Video not found'], 404);
@@ -77,6 +82,10 @@ class VideoController extends Controller
         if ($video->folderName) {
             $video->folderName = asset($video->folderName);
         }
+
+        // Agregar el conteo de likes y dislikes
+        $video->likes_count = $video->likes->count();
+        $video->dislikes_count = $video->dislikes->count();
 
         return response()->json($video);
     }

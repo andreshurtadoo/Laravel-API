@@ -1,66 +1,306 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# API de Usuarios
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## GET Usuarios - Obtener todos los Usuarios
 
-## About Laravel
+### Endpoint
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+```http
+GET http://127.0.0.1:8000/api/user
+```
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Ejemplo de Respuesta del Servidor
+```json
+[
+    {
+        "id": 11,
+        "cedula": "29626410",
+        "name": "Andres Eduardo",
+        "lastname": "Hurtado Benites",
+        "email": "hurtadoandres2002@gmail.com",
+        "telephone": "04244116339",
+        "state": "Carabobo",
+        "city": "Valencia",
+        "photo_url": "http://127.0.0.1:8000/storage/photos/o5BRI1KaQs523Gc0PJEmMOF0ZxeB3g2opJgGIQQZ.png",
+        "status": 0,
+        "rol": 0,
+        "email_verified_at": null
+    }
+    // Otros usuarios
+]
+```
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Utiliza el campo **photo_ulr** para que el servidor te devuelva la imagen del usuario**
 
-## Learning Laravel
+## POST Usuarios - Crear un usuario
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Endpoint
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+```http
+POST http://127.0.0.1:8000/api/user
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+#### Parámetros de la Solicitud
 
-## Laravel Sponsors
+Envía los siguientes campos en el cuerpo de la solicitud como formulario o JSON:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- **cedula** (opcional, string): Número de cédula del usuario.
+- **name** (obligatorio, string): Nombre del usuario.
+- **lastname** (obligatorio, string): Apellido del usuario.
+- **email** (obligatorio, string): Correo electrónico del usuario (debe ser único).
+- **telephone** (opcional, string): Número de teléfono del usuario.
+- **state** (opcional, string): Estado del usuario.
+- **city** (opcional, string): Ciudad del usuario.
+- **photo_url** (opcional, file): URL de la foto del usuario (formatos permitidos: jpeg, png, jpg, gif, tamaño máximo: 2MB).
+- **status** (opcional, integer): Estado del usuario (0 o 1).
+- **rol** (opcional, integer): Rol del usuario (0 o 1).
 
-### Premium Partners
+## GET Usuario - Obtener un usuario
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+### Endpoint
 
-## Contributing
+```http
+GET http://127.0.0.1:8000/api/user/user_id
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## UPDATE Usuario - Editar un usuario
 
-## Code of Conduct
+### Endpoint
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```http
+PUT http://127.0.0.1:8000/api/user/user_id
+```
 
-## Security Vulnerabilities
+Envía los mismos campos para crear un usuario en el cuerpo de la solicitud como formulario o JSON:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## DELETE Usuario - Eliminar un usuario
 
-## License
+### Endpoint
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```http
+DELETE http://127.0.0.1:8000/api/user/user_id
+```
+
+# API de Videos
+
+## GET Videos - Obtener todos los Videos
+
+### Endpoint
+
+```http
+GET http://127.0.0.1:8000/api/videos
+```
+
+### Ejemplo de Respuesta del Servidor
+```json
+[
+  {
+    "id": 1,
+    "name": "One Hundred Years of Solitude Official Teaser Netflix",
+    "description": "Official Teaser Netflix",
+    "user_id": 11,
+    "folderName": "http://127.0.0.1:8000/storage/videos/9KvHaZuJHQjT9Qc9ZZqQLkypdKysI1mEyYDV2pP5.mp4",
+    "created_at": "2024-07-05T00:24:20.000000Z",
+    "updated_at": "2024-07-05T00:24:20.000000Z",
+    "likes_count": 2,
+    "dislikes_count": 1,
+    "user": {
+      "id": 11,
+      "cedula": "29626410",
+      "name": "Andres Eduardo",
+      "lastname": "Hurtado Benites",
+      "email": "hurtadoandres2002@gmail.com",
+      "telephone": "04244116339",
+      "state": "Carabobo",
+      "city": "Valencia",
+      "photo_url": "/storage/photos/o5BRI1KaQs523Gc0PJEmMOF0ZxeB3g2opJgGIQQZ.png",
+      "status": 0,
+      "rol": 0,
+      "email_verified_at": null
+    },
+    "likes": [
+      {
+        "id": 2,
+        "user_id": 1,
+        "video_id": 1,
+        "created_at": "2024-07-05T14:06:19.000000Z",
+        "updated_at": "2024-07-05T14:06:19.000000Z"
+      },
+      {
+        "id": 3,
+        "user_id": 3,
+        "video_id": 1,
+        "created_at": "2024-07-05T14:06:43.000000Z",
+        "updated_at": "2024-07-05T14:06:43.000000Z"
+      }
+    ],
+    "dislikes": [
+      {
+        "id": 1,
+        "user_id": 11,
+        "video_id": 1,
+        "created_at": "2024-07-05T14:05:47.000000Z",
+        "updated_at": "2024-07-05T14:05:47.000000Z"
+      }
+    ],
+    "comments": [
+      {
+        "id": 1,
+        "user_id": 11,
+        "video_id": 1,
+        "comment": "Wow increible, espero verla pronto",
+        "created_at": "2024-07-05T14:24:13.000000Z",
+        "updated_at": "2024-07-05T14:24:13.000000Z"
+      }
+    ]
+  }
+]
+```
+En la respuesta json podemos ver los siguientes arreglos:
+- **User** Contiene la informacion del usuario al que le pertence el video.
+- **Likes/Dislikes** Contiene la informacion de los usuarios que le han dado like al video, lo mismo para dislike.
+- **Comments** Contiene los comentarios que tiene el video y por que usuario fue hecho.
+
+Utiliza el campo **folderName** para que el servidor te devuelva el video mp4
+
+## POST Videos - Crear un Video
+
+### Endpoint
+
+```http
+POST http://127.0.0.1:8000/api/videos
+```
+
+#### Parámetros de la Solicitud
+
+Envía los siguientes campos en el cuerpo de la solicitud como formulario o JSON:
+
+- **name** (obligatorio, string): Nombre del video.
+- **description** (opcional, string): Descripción del video.
+- **user_id** (obligatorio, integer): ID del usuario que sube el video (debe existir en la base de datos).
+- **video** (obligatorio, file): Archivo de video (formatos permitidos: mp4, mov, ogg, qt, tamaño máximo: 20MB).
+
+#### Ejemplo de Solicitud (FormData)
+
+## GET Video - Obtener un video
+
+### Endpoint
+
+```http
+GET http://127.0.0.1:8000/api/videos/user_id
+```
+
+## UPDATE Video - Editar un video
+
+### Endpoint
+
+```http
+PUT http://127.0.0.1:8000/api/videos/user_id
+```
+
+Envía los mismos campos para crear un video en el cuerpo de la solicitud como formulario o JSON:
+
+## DELETE Video - Eliminar un video
+
+### Endpoint
+
+```http
+DELETE http://127.0.0.1:8000/api/videos/user_id
+```
+
+# API de Email
+
+### Endpoint para enviar un email
+
+```http
+POST http://127.0.0.1:8000/api/send-email
+```
+
+#### Parámetros de la Solicitud
+
+Envía los siguientes campos en el cuerpo de la solicitud como formulario o JSON:
+
+- **to** (string): Direccion email a donde queremos enviar el correo.
+- **body** (string): Contenido o cuerpo del email.
+
+### Respuesta del servidor
+
+```json
+{
+  "message": "Email sent successfully"
+}
+```
+
+# API de Likes
+
+### Endpoint para darle like a un video
+
+```http
+POST http://127.0.0.1:8000/api/videos/video_id/likes/user_id
+```
+
+- **Importante** En la url debe ir el **id del video** y el **id del usuario**
+
+### Respuesta del servidor
+
+```json
+{
+  "video_id": 1,
+  "user_id": 11,
+  "updated_at": "2024-07-05T16:20:34.000000Z",
+  "created_at": "2024-07-05T16:20:34.000000Z",
+  "id": 4
+}
+```
+
+# API de Dislike
+
+### Endpoint para darle dislike a un video
+
+```http
+POST http://127.0.0.1:8000/api/videos/video_id/dislikes/user_id
+```
+
+- **Importante** En la url debe ir el **id del video** y el **id del usuario**
+
+### Respuesta del servidor
+
+```json
+{
+  "video_id": 1,
+  "user_id": 11,
+  "updated_at": "2024-07-05T16:22:31.000000Z",
+  "created_at": "2024-07-05T16:22:31.000000Z",
+  "id": 2
+}
+```
+
+- **Nota** Un usuario no puede darle like y dislike al mismo video, si da un like y luego un dislike, el like anterior se quita
+
+# API de comentarios
+
+### Endpoint para hacer un comentario a un video
+
+```http
+POST http://127.0.0.1:8000/api/videos/video_id/comments/user_id
+```
+
+- **Importante** En la url debe ir el **id del video** y el **id del usuario**
+
+#### Parámetros de la Solicitud
+
+Envía los siguientes campos en el cuerpo de la solicitud como formulario o JSON:
+
+- **comment** (string): Comentario que se le va hacer al video.
+
+### Respuesta del servidor
+
+```json
+{
+  "comment": "Esto es un comentario de prueba",
+  "user_id": 11,
+  "video_id": 1,
+  "updated_at": "2024-07-05T16:28:25.000000Z",
+  "created_at": "2024-07-05T16:28:25.000000Z",
+  "id": 2
+}
+```
