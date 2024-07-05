@@ -42,4 +42,10 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    // Definición de la relación uno-a-muchos
+    public function videos()
+    {
+        return $this->hasMany(Video::class);
+    }
 }
