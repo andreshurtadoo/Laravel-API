@@ -12,9 +12,21 @@ class VideoController extends Controller
     // Obtener todos los videos
     public function index()
     {
+        // Obtiene todos los videos incluyendo la información del usuario asociado
         $videos = Video::with('user')->get();
+
+        // Agrega la URL completa del video al objeto de video
+        $videos->transform(function ($video) {
+            if ($video->folderName) {
+                $video->folderName = asset($video->folderName);
+            }
+            return $video;
+        });
+
+        // Retorna la lista de videos en formato JSON
         return response()->json($videos);
     }
+
 
     // Crear un nuevo video
     public function store(Request $request)
@@ -65,6 +77,50 @@ class VideoController extends Controller
         if ($video->folderName) {
             $video->folderName = asset($video->folderName);
         }
+
+        return response()->json($video);
+    }
+
+    // Actualizar un video específico por ID
+    public function update(Request $request, $id)
+    {
+        // Validación de los datos de entrada
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'video' => 'nullable|file|mimes:mp4,mov,ogg,qt|max:20000', // Asegurarse de que sea un video válido si se proporciona uno nuevo
+        ]);
+
+        // Si la validación falla, retorna un error
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
+        $video = Video::find($id);
+
+        if (!$video) {
+            return response()->json(['message' => 'Video not found'], 404);
+        }
+
+        // Procesar el archivo de video si se proporciona uno nuevo
+        if ($request->hasFile('video')) {
+            // Eliminar el video anterior si existe
+            if ($video->folderName) {
+                Storage::delete(str_replace('/storage', 'public', $video->folderName));
+            }
+            $videoFile = $request->file('video');
+            $videoPath = $videoFile->store('public/videos');
+            $videoUrl = Storage::url($videoPath);
+        } else {
+            $videoUrl = $video->folderName;
+        }
+
+        // Actualizar el video
+        $video->update([
+            'name' => $request->name,
+            'description' => $request->description,
+            'folderName' => $videoUrl,
+        ]);
 
         return response()->json($video);
     }
