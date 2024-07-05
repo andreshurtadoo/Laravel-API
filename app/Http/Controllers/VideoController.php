@@ -15,7 +15,7 @@ class VideoController extends Controller
         // Obtiene todos los videos incluyendo la información del usuario, likes, dislikes y comentarios asociados
         $videos = Video::with(['user', 'likes', 'dislikes', 'comments'])->get();
 
-        // Agrega la URL completa del video y la cantidad de likes y dislikes al objeto de video
+        // Transforma cada video para agregar la URL completa del video y contar los likes y dislikes
         $videos->transform(function ($video) {
             if ($video->folderName) {
                 $video->folderName = asset($video->folderName);
@@ -25,13 +25,16 @@ class VideoController extends Controller
             $video->likes_count = $video->likes->count();
             $video->dislikes_count = $video->dislikes->count();
 
+            // Remover la colección de likes y dislikes para mantener solo los conteos
+            unset($video->likes);
+            unset($video->dislikes);
+
             return $video;
         });
 
         // Retorna la lista de videos en formato JSON
         return response()->json($videos);
     }
-
 
     // Crear un nuevo video
     public function store(Request $request)
@@ -86,6 +89,10 @@ class VideoController extends Controller
         // Agregar el conteo de likes y dislikes
         $video->likes_count = $video->likes->count();
         $video->dislikes_count = $video->dislikes->count();
+
+        // Remover la colección de likes y dislikes para mantener solo los conteos
+        unset($video->likes);
+        unset($video->dislikes);
 
         return response()->json($video);
     }

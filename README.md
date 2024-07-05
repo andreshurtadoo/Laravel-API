@@ -117,31 +117,6 @@ GET http://127.0.0.1:8000/api/videos
       "rol": 0,
       "email_verified_at": null
     },
-    "likes": [
-      {
-        "id": 2,
-        "user_id": 1,
-        "video_id": 1,
-        "created_at": "2024-07-05T14:06:19.000000Z",
-        "updated_at": "2024-07-05T14:06:19.000000Z"
-      },
-      {
-        "id": 3,
-        "user_id": 3,
-        "video_id": 1,
-        "created_at": "2024-07-05T14:06:43.000000Z",
-        "updated_at": "2024-07-05T14:06:43.000000Z"
-      }
-    ],
-    "dislikes": [
-      {
-        "id": 1,
-        "user_id": 11,
-        "video_id": 1,
-        "created_at": "2024-07-05T14:05:47.000000Z",
-        "updated_at": "2024-07-05T14:05:47.000000Z"
-      }
-    ],
     "comments": [
       {
         "id": 1,
@@ -150,15 +125,25 @@ GET http://127.0.0.1:8000/api/videos
         "comment": "Wow increible, espero verla pronto",
         "created_at": "2024-07-05T14:24:13.000000Z",
         "updated_at": "2024-07-05T14:24:13.000000Z"
+      },
+      {
+        "id": 2,
+        "user_id": 11,
+        "video_id": 1,
+        "comment": "Esto es un comentario de prueba",
+        "created_at": "2024-07-05T16:28:25.000000Z",
+        "updated_at": "2024-07-05T16:28:25.000000Z"
       }
     ]
   }
 ]
+// Otros videos
 ```
 En la respuesta json podemos ver los siguientes arreglos:
 - **User** Contiene la informacion del usuario al que le pertence el video.
-- **Likes/Dislikes** Contiene la informacion de los usuarios que le han dado like al video, lo mismo para dislike.
 - **Comments** Contiene los comentarios que tiene el video y por que usuario fue hecho.
+- **likes_count** Contiene la cantidad de likes que tiene el video.
+- **dislikes_count** Contiene la cantidad de dislikes que tiene el video.
 
 Utiliza el campo **folderName** para que el servidor te devuelva el video mp4
 
