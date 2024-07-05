@@ -1,6 +1,70 @@
-# API de Usuarios
+## Instrucciones para Clonar y Configurar el Proyecto en Laravel
 
-## GET Usuarios - Obtener todos los Usuarios
+### Paso 1: Clonar el Repositorio
+
+```bash
+git clone https://github.com/tu-usuario/tu-repositorio.git
+cd tu-repositorio
+```
+
+### Paso 2: Instalar Dependencias
+
+```bash
+composer install
+```
+
+### Paso 3: Copiar el Archivo de Configuración
+
+```bash
+cp .env.example .env
+```
+
+### Paso 4: Configurar el Archivo .env
+Edita el archivo .env para configurar la base de datos y otros detalles necesarios. Por ejemplo:
+
+```plaintext
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=nombre_de_tu_base_de_datos (Deberia ser youtube)
+DB_USERNAME=tu_usuario
+DB_PASSWORD=tu_contraseña
+```
+
+### Paso 5: Generar la Clave de la Aplicación
+```bash
+php artisan key:generate
+```
+
+### Paso 6: Crear la Base de Datos
+Asegúrate de que la base de datos especificada en el archivo .env esté creada. Puedes crearla usando una herramienta como phpMyAdmin, MySQL Workbench, o desde la línea de comandos
+
+```sql
+CREATE DATABASE youtube;
+```
+
+### Paso 7: Ejecutar Migraciones
+```bash
+php artisan migrate
+```
+
+### Paso 8: Crear el Enlace Simbólico al Almacenamiento
+Para acceder a los archivos almacenados en el directorio storage, ejecuta:
+
+```bash
+php artisan storage:link
+```
+
+### Paso 9: Iniciar el Servidor de Desarrollo
+```bash
+php artisan serve
+```
+
+# DOCUMENTACION DE LA API
+
+## API de Usuarios
+
+### GET Usuarios - Obtener todos los Usuarios
 
 ### Endpoint
 
@@ -31,7 +95,7 @@ GET http://127.0.0.1:8000/api/user
 
 Utiliza el campo **photo_ulr** para que el servidor te devuelva la imagen del usuario**
 
-## POST Usuarios - Crear un usuario
+### POST Usuarios - Crear un usuario
 
 ### Endpoint
 
@@ -54,7 +118,7 @@ Envía los siguientes campos en el cuerpo de la solicitud como formulario o JSON
 - **status** (opcional, integer): Estado del usuario (0 o 1).
 - **rol** (opcional, integer): Rol del usuario (0 o 1).
 
-## GET Usuario - Obtener un usuario
+### GET Usuario - Obtener un usuario
 
 ### Endpoint
 
@@ -62,7 +126,7 @@ Envía los siguientes campos en el cuerpo de la solicitud como formulario o JSON
 GET http://127.0.0.1:8000/api/user/user_id
 ```
 
-## UPDATE Usuario - Editar un usuario
+### UPDATE Usuario - Editar un usuario
 
 ### Endpoint
 
@@ -72,7 +136,7 @@ PUT http://127.0.0.1:8000/api/user/user_id
 
 Envía los mismos campos para crear un usuario en el cuerpo de la solicitud como formulario o JSON:
 
-## DELETE Usuario - Eliminar un usuario
+### DELETE Usuario - Eliminar un usuario
 
 ### Endpoint
 
@@ -80,9 +144,9 @@ Envía los mismos campos para crear un usuario en el cuerpo de la solicitud como
 DELETE http://127.0.0.1:8000/api/user/user_id
 ```
 
-# API de Videos
+## API de Videos
 
-## GET Videos - Obtener todos los Videos
+### GET Videos - Obtener todos los Videos
 
 ### Endpoint
 
@@ -147,7 +211,7 @@ En la respuesta json podemos ver los siguientes arreglos:
 
 Utiliza el campo **folderName** para que el servidor te devuelva el video mp4
 
-## POST Videos - Crear un Video
+### POST Videos - Crear un Video
 
 ### Endpoint
 
@@ -166,7 +230,7 @@ Envía los siguientes campos en el cuerpo de la solicitud como formulario o JSON
 
 #### Ejemplo de Solicitud (FormData)
 
-## GET Video - Obtener un video
+### GET Video - Obtener un video
 
 ### Endpoint
 
@@ -174,7 +238,7 @@ Envía los siguientes campos en el cuerpo de la solicitud como formulario o JSON
 GET http://127.0.0.1:8000/api/videos/user_id
 ```
 
-## UPDATE Video - Editar un video
+### UPDATE Video - Editar un video
 
 ### Endpoint
 
@@ -184,7 +248,7 @@ PUT http://127.0.0.1:8000/api/videos/user_id
 
 Envía los mismos campos para crear un video en el cuerpo de la solicitud como formulario o JSON:
 
-## DELETE Video - Eliminar un video
+### DELETE Video - Eliminar un video
 
 ### Endpoint
 
@@ -192,7 +256,7 @@ Envía los mismos campos para crear un video en el cuerpo de la solicitud como f
 DELETE http://127.0.0.1:8000/api/videos/user_id
 ```
 
-# API de Email
+## API de Email
 
 ### Endpoint para enviar un email
 
@@ -215,7 +279,7 @@ Envía los siguientes campos en el cuerpo de la solicitud como formulario o JSON
 }
 ```
 
-# API de Likes
+## API de Likes
 
 ### Endpoint para darle like a un video
 
@@ -237,7 +301,7 @@ POST http://127.0.0.1:8000/api/videos/video_id/likes/user_id
 }
 ```
 
-# API de Dislike
+## API de Dislike
 
 ### Endpoint para darle dislike a un video
 
@@ -261,7 +325,7 @@ POST http://127.0.0.1:8000/api/videos/video_id/dislikes/user_id
 
 - **Nota** Un usuario no puede darle like y dislike al mismo video, si da un like y luego un dislike, el like anterior se quita
 
-# API de comentarios
+## API de comentarios
 
 ### Endpoint para hacer un comentario a un video
 
